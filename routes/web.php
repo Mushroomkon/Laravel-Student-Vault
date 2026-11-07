@@ -13,25 +13,7 @@ Route::get('/', function () {
 });
 
 
-//changes
-Route::get('/up', fn () => response()->json(['status' => 'ok']));
-Route::get('/check', function () {
-    $users = \App\Models\User::all(['id', 'name', 'email', 'role']);
-    return \response()->json($users->toArray());
-});
-Route::get('/setup', function () {
-    \Artisan::call('migrate', ['--force' => true]);
-    \Artisan::call('db:seed', ['--force' => true]);
-    return \Artisan::output();
-});
-
-//del later
-Route::get('/seed-now', function () {
-    \Artisan::call('migrate', ['--force' => true]);
-    \Artisan::call('db:seed', ['--force' => true]);
-    return "Done! Migrations and seeders ran.<br>";
-});
-
+//change
 
 ////////----///////
 Route::get('/dashboard', [DashboardController::class, 'index'])
