@@ -25,6 +25,14 @@ Route::get('/setup', function () {
     return \Artisan::output();
 });
 
+//del later
+Route::get('/seed-now', function () {
+    \Artisan::call('migrate', ['--force' => true]);
+    \Artisan::call('db:seed', ['--force' => true]);
+    return "Done! Migrations and seeders ran.<br>";
+});
+
+
 ////////----///////
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
