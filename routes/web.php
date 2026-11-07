@@ -12,6 +12,8 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/up', fn () => response()->json(['status' => 'ok']));
+
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
