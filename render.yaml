@@ -1,9 +1,12 @@
 services:
   - type: web
-    name: laravel-student-vault
+    name: laravel-student-vault-8
     env: docker
+    buildCommand: composer install && php artisan migrate --force && php artisan db:seed --force
+    startCommand: ./start.sh
     plan: free
     healthCheckPath: /up
+    
     envVars:
       - key: APP_ENV
         value: production
