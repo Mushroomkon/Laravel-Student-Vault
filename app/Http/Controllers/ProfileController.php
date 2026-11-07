@@ -14,58 +14,33 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
-    {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+  public function update(ProfileUpdateRequest $request): RedirectResponse
+{
+    $user = $request->user();
+
+    if ($user->isStudent()) {
+        // Update student details
+        $user->student()->updateOrCreate(
+            ['user_id' => $user->id],
+            $request->only(['phone', 'first_name', 'last_name', 'date_of_birth', 'address'])
+        );
+
+        // Keep the user's name in sync
+        $user->name = trim($request->first_name . ' ' . $request->last_name);
+    } else {
+        // Admin
+        $user->fill($request->only(['name', 'email']));
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
-        $user = $request->user();
-        $user->fill($request->safe(['name', 'email']));
+    // Always allow email update
+    $user->email = $request->email;
 
-        if ($user->isStudent()) {
-            $user->student()->updateOrCreate(
-                ['user_id' => $user->id],
-                $request->safe(['phone', 'first_name', 'last_name', 'date_of_birth', 'address'])
-            );
-            $user->name = trim($request->first_name . ' ' . $request->last_name);
-        }
-
-        if ($user->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
-        $user->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+    $user->save();
 
-        $user = $request->user();
-
-        abort_if($user->isAdmin(), 403, 'Administrator accounts cannot be deleted.');
-
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
-    }
+    return Redirect::route('profile.edit')->with('status', 'profile-updated');
+}
 }
