@@ -12,16 +12,15 @@ use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
-    {
-        // Admin
-        $admin = User::create([
+{
+    User::firstOrCreate(
+        ['email' => 'admin@test.com'],
+        [
             'name' => 'Admin',
-            'email' => 'admin@test.com',
             'password' => Hash::make('password'),
             'role' => 'admin',
-        ]);
-
-    
+        ]
+    );
 
         foreach ($studentsData as $data) {
             $user = User::create([
