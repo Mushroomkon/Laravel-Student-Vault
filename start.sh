@@ -11,5 +11,9 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
-# Start the server
-/usr/local/bin/start
+# Start Nginx and PHP-FPM manually
+nginx
+php-fpm8.3 --daemonize
+
+# Keep container running
+wait
