@@ -12,13 +12,20 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/up', fn () => response()->json(['status' => 'ok']));
 
+//changes
+Route::get('/up', fn () => response()->json(['status' => 'ok']));
+Route::get('/check', function () {
+    $users = \App\Models\User::all(['id', 'name', 'email', 'role']);
+    return \response()->json($users->toArray());
+});
 Route::get('/setup', function () {
     \Artisan::call('migrate', ['--force' => true]);
     \Artisan::call('db:seed', ['--force' => true]);
     return \Artisan::output();
 });
+
+////////----///////
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
