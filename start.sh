@@ -4,7 +4,7 @@ set -e
 cd /var/www/html
 
 php artisan migrate --force
-php artisan database:seed --force
+php artisan db:seed --force
 
 php artisan config:cache
 php artisan route:cache
