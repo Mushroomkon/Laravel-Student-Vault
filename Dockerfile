@@ -2,8 +2,8 @@ FROM serversideup/php:8.3-fpm-nginx
 
 USER root
 
-# Install PHP extensions for MySQL
-RUN install-php-extensions intl bcmath exif gd zip pcntl opcache pdo_mysql
+# Install PHP extensions for PostgreSQL
+RUN install-php-extensions intl bcmath exif gd zip pcntl opcache pdo_pgsql
 
 # Copy application code
 COPY --chown=www-data:www-data . /var/www/localhost
