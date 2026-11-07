@@ -23,12 +23,10 @@ RUN npm ci && npm run build && rm -rf node_modules
 # Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# Copy and make the startup script executable
-COPY --chown=www-data:www-data start.sh /var/www/html/start.sh
-RUN chmod +x /var/www/html/start.sh
+# Run migrations + caching automatically at container startup
+COPY start.sh /serversideup/auto/start.sh
+RUN chmod +x /serversideup/auto/start.sh
 
 USER www-data
 
 EXPOSE 8080
-
-CMD ["/var/www/html/start.sh"]
