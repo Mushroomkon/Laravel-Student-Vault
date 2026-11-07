@@ -12,15 +12,6 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     //changes
-    public function edit()
-{
-    $user = Auth::user(); // or User::find()
-    
-    if (!$user) {
-        return abort(404);
-    }
-       return view('profile', compact('user'));
-}
 /**
  * Update the user's profile information.
  */
