@@ -2,22 +2,22 @@ FROM serversideup/php:8.3-fpm-nginx
 
 USER root
 
-# Install PHP extensions for PostgreSQL
+# Install PHP extensions
 RUN install-php-extensions intl bcmath exif gd zip pcntl opcache pdo_pgsql
 
-# Install Node.js 20 LTS for building frontend assets
+# Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Copy application code to /var/www/localhost (this image's default web root)
-COPY --chown=www-data:www-data . /var/www/localhost
+# Copy code to /var/www/html (the default document root for this image)
+COPY --chown=www-data:www-data . /var/www/html
 
-WORKDIR /var/www/localhost
+WORKDIR /var/www/html
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Build frontend assets then remove node_modules to keep image small
+# Build frontend assets
 RUN npm ci && npm run build && rm -rf node_modules
 
 # Set permissions
