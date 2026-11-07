@@ -19,15 +19,16 @@ class ProfileController extends Controller
     if (!$user) {
         return abort(404);
     }
-    return view('profile', compact('user'));
+       return view('profile', compact('user'));
 }
-    //top changes
-    /**
-     * Display the user's profile form.
- public function update(ProfileUpdateRequest $request): RedirectResponse
+
+/**
+ * Update the user's profile information.
+ */
+public function update(ProfileUpdateRequest $request): RedirectResponse
 {
     $user = $request->user();
-
+    
     if ($user->isStudent()) {
         $user->student()->updateOrCreate(
             ['user_id' => $user->id],
