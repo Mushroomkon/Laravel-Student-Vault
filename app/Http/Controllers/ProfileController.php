@@ -19,7 +19,7 @@ class ProfileController extends Controller
     if (!$user) {
         return abort(404);
     }
-    return view('profile', compact('user'));
+   return view('profile.edit', compact('user'));
 }
 
 public function update(ProfileUpdateRequest $request): RedirectResponse
