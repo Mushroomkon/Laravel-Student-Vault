@@ -9,7 +9,7 @@ RUN install-php-extensions intl bcmath exif gd zip pcntl opcache pdo_pgsql
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Copy application code
+# Copy application code to /var/www/localhost (this image's default web root)
 COPY --chown=www-data:www-data . /var/www/localhost
 
 WORKDIR /var/www/localhost
@@ -18,7 +18,7 @@ WORKDIR /var/www/localhost
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Build frontend assets then remove node_modules to keep image small
-# RUN npm ci && npm run build && rm -rf node_modules
+RUN npm ci && npm run build && rm -rf node_modules
 
 # Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
