@@ -11,6 +11,17 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    ///changes
+    public function show()
+{
+    $user = Auth::user(); // or User::find()
+    
+    if (!$user) {
+        return abort(404);
+    }
+    return view('profile', compact('user'));
+}
+    //top changes
     /**
      * Display the user's profile form.
  public function update(ProfileUpdateRequest $request): RedirectResponse
