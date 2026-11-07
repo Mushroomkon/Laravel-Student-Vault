@@ -35,4 +35,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('students', StudentController::class);
     Route::resource('courses', CourseController::class);
-    Route
+    Route::resource('enrollments', EnrollmentController::class);
+});
+
+require __DIR__.'/auth.php';
