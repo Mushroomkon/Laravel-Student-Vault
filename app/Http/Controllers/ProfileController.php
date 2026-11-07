@@ -11,12 +11,20 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    //changes
-/**
- * Update the user's profile information.
- */
+ 
+    public function edit()
+{
+    $user = Auth::user();
+
+    if (!$user) {
+        return abort(404);
+    }
+    return view('profile', compact('user'));
+}
+
 public function update(ProfileUpdateRequest $request): RedirectResponse
 {
+    
     $user = $request->user();
     
     if ($user->isStudent()) {
