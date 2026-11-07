@@ -24,7 +24,17 @@ class User extends Authenticatable
     'password',
     'role',
 ];
-
+        protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+   protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
 public function student()
 {
     return $this->hasOne(Student::class);
@@ -40,3 +50,4 @@ public function isStudent()
     return $this->role === 'student';
 }
 }
+
