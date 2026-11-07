@@ -15,20 +15,6 @@ Route::get('/', function () {
     return view('index');
 });
 
-
-// TEMPORARY - delete after login works
-Route::get('/force-admin', function () {
-    $user = User::updateOrCreate(
-        ['email' => 'admin@test.com'],
-        [
-            'name' => 'Admin',
-            'password' => 'password',
-            'role' => 'admin',
-        ]
-    );
-
-    return 'Admin password has been reset to: password<br>Email: admin@test.com<br><a href="/login">Go to Login</a>';
-});
 ////////----///////
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
