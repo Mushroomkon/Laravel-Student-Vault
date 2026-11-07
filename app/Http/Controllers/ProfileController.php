@@ -11,8 +11,8 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    ///changes
-    public function show()
+    //changes
+    public function edit()
 {
     $user = Auth::user(); // or User::find()
     
@@ -21,7 +21,6 @@ class ProfileController extends Controller
     }
        return view('profile', compact('user'));
 }
-
 /**
  * Update the user's profile information.
  */
