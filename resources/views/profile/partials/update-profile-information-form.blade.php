@@ -38,7 +38,7 @@
 
             <div>
                 <x-input-label for="date_of_birth" :value="__('Date of Birth')" />
-                <x-text-input id="date_of_birth" name="date_of_birth" type="date" class="mt-1 block w-full" :value="old('date_of_birth', optional($user->student?->date_of_birth)->format('Y-m-d'))" required />
+                <x-text-input id="date_of_birth" name="date_of_birth" type="date" class="mt-1 block w-full" :value="old('date_of_birth', $user->student?->date_of_birth?->format('Y-m-d'))" required />
                 <x-input-error class="mt-2" :messages="$errors->get('date_of_birth')" />
             </div>
 
