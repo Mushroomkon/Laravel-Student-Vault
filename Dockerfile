@@ -12,9 +12,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 # Copy application code to /var/www/html
 COPY --chown=www-data:www-data . /var/www/html
 
-# Rename .env.example to .env
-RUN cp /var/www/html/.env.example /var/www/html/.env
-
 WORKDIR /var/www/html
 
 # Install PHP dependencies
