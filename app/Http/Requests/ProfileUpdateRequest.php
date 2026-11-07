@@ -22,13 +22,12 @@ class ProfileUpdateRequest extends FormRequest
         ];
 
         if ($this->user()->isStudent()) {
-            $rules['first_name'] = ['required', 'string', 'max:100'];
-            $rules['last_name']  = ['required', 'string', 'max:100'];
-            $rules['phone']      = ['required', 'string', 'max:30'];
-            $rules['date_of_birth'] = ['required', 'date', 'before_or_equal:today'];
-            $rules['address']    = ['required', 'string', 'max:1000'];
+            $rules['first_name']     = ['required', 'string', 'max:100'];
+            $rules['last_name']      = ['required', 'string', 'max:100'];
+            $rules['phone']          = ['required', 'string', 'max:30'];
+            $rules['date_of_birth']  = ['required', 'date', 'before_or_equal:today'];
+            $rules['address']        = ['required', 'string', 'max:1000'];
         } else {
-            // Admin still uses the normal name field
             $rules['name'] = ['required', 'string', 'max:255'];
         }
 
